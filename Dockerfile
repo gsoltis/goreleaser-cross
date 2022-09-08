@@ -113,3 +113,4 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 COPY --from=osx-cross "${OSX_CROSS_PATH}/target" "${OSX_CROSS_PATH}/target"
 ENV PATH=${OSX_CROSS_PATH}/target/bin:$PATH
+LABEL org.opencontainers.image.source https://github.com/vercel/turborepo

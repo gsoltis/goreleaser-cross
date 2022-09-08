@@ -7,8 +7,8 @@ ifeq ($(REGISTRY),)
 	IMAGE_BASE_NAME := goreleaser/goreleaser-cross-base:$(TAG_VERSION)
 	IMAGE_NAME      := goreleaser/goreleaser-cross:$(TAG_VERSION)
 else
-	IMAGE_BASE_NAME := $(REGISTRY)/gsoltis/goreleaser-cross-base:$(TAG_VERSION)
-	IMAGE_NAME      := $(REGISTRY)/gsoltis/goreleaser-cross:$(TAG_VERSION)
+	IMAGE_BASE_NAME := $(REGISTRY)/vercel/goreleaser-cross-base:$(TAG_VERSION)
+	IMAGE_NAME      := $(REGISTRY)/vercel/goreleaser-cross:$(TAG_VERSION)
 endif
 
 OSX_SDK            := MacOSX12.0.sdk
