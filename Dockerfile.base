@@ -54,3 +54,5 @@ RUN \
  && chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
+ARG GIT_REPO
+LABEL org.opencontainers.image.source $GIT_REPO

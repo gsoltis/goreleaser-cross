@@ -2,13 +2,15 @@ include .env
 
 REGISTRY           ?= ghcr.io
 TAG_VERSION        ?= $(shell git describe --tags --abbrev=0)
+OWNER              ?= goreleaser
+GIT_REPO           ?= https://github.com/goreleaser/goreleaser-cross
 
 ifeq ($(REGISTRY),)
-	IMAGE_BASE_NAME := goreleaser/goreleaser-cross-base:$(TAG_VERSION)
-	IMAGE_NAME      := goreleaser/goreleaser-cross:$(TAG_VERSION)
+	IMAGE_BASE_NAME := $(OWNER)/goreleaser-cross-base:$(TAG_VERSION)
+	IMAGE_NAME      := $(OWNER)/goreleaser-cross:$(TAG_VERSION)
 else
-	IMAGE_BASE_NAME := $(REGISTRY)/vercel/goreleaser-cross-base:$(TAG_VERSION)
-	IMAGE_NAME      := $(REGISTRY)/vercel/goreleaser-cross:$(TAG_VERSION)
+	IMAGE_BASE_NAME := $(REGISTRY)/$(OWNER)/goreleaser-cross-base:$(TAG_VERSION)
+	IMAGE_NAME      := $(REGISTRY)/$(OWNER)/goreleaser-cross:$(TAG_VERSION)
 endif
 
 OSX_SDK            := MacOSX12.0.sdk
@@ -41,6 +43,7 @@ goreleaser-cross-base-%:
 		--build-arg COSIGN_VERSION=$(COSIGN_VERSION) \
 		--build-arg COSIGN_SHA256=$(COSIGN_SHA256) \
 		--build-arg DEBIAN_FRONTEND=$(DEBIAN_FRONTEND) \
+		--build-arg GIT_REPO=$(GIT_REPO) \
 		-f Dockerfile.base .
 
 .PHONY: goreleaser-cross-%
@@ -53,6 +56,7 @@ goreleaser-cross-%:
 		--build-arg OSX_VERSION_MIN=$(OSX_VERSION_MIN) \
 		--build-arg OSX_CROSS_COMMIT=$(OSX_CROSS_COMMIT) \
 		--build-arg DEBIAN_FRONTEND=$(DEBIAN_FRONTEND) \
+		--build-arg GIT_REPO=$(GIT_REPO) \
 		-f Dockerfile .
 
 .PHONY: goreleaser-cross-base

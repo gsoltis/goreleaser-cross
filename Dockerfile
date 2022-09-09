@@ -1,7 +1,7 @@
 # golang parameters
 ARG GO_VERSION
 
-FROM ghcr.io/gsoltis/goreleaser-cross-base:v${GO_VERSION} AS osx-cross-base
+FROM ghcr.io/vercel/goreleaser-cross-base:v${GO_VERSION} AS osx-cross-base
 ENV OSX_CROSS_PATH=/osxcross
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -113,4 +113,5 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 COPY --from=osx-cross "${OSX_CROSS_PATH}/target" "${OSX_CROSS_PATH}/target"
 ENV PATH=${OSX_CROSS_PATH}/target/bin:$PATH
-LABEL org.opencontainers.image.source https://github.com/vercel/turborepo
+ARG GIT_REPO
+LABEL org.opencontainers.image.source $GIT_REPO
